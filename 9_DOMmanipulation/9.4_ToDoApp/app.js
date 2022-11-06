@@ -14,6 +14,8 @@ Remove a todo
 //remove a todo
 const todo = document.querySelector('#todo-list');
 
+localStorage.clear();
+
 todo.addEventListener('click', function(event){
     if (event.target.tagName === "BUTTON" && event.target.textContent === "completed") {
         event.target.parentElement.style.textDecoration = "line-through";
@@ -45,6 +47,7 @@ form.addEventListener("submit", function(e){
 
     todo.append(newTodo);
     input.value = '';
+
 })
 
 

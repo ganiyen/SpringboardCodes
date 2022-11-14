@@ -66,36 +66,29 @@ function createDivsForColors(colorArray) {
 // TODO: Implement this function!
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
-  //console.log("you just clicked", event.target);
-  //console.dir(event.target)
-  //if (event.target.getAttribute("data-open") !== "true") {
-    console.log("clickCounter",clickCounter)
-  if (event.target.getAttribute("data-matched") !== "true") {  //ignore clicks on matched cards
-    if (clickCounter <= 2) { 
+  
+  if ((event.target.getAttribute("data-matched") !== "true") && (clickCounter <= 1)) {  //ignore clicks on matched cards, cannot click more than 2 cards
+      clickCounter++;
       event.target.setAttribute("data-open","true");
       event.target.style.backgroundColor = event.target.className;
 
-      console.log(gameContainer)
-      
         if (clickCounter === 2 && isCardMatch() === "true" ) {
           console.log("MATCH!!")
-          cleanUpTrue();
+          matchedEvent();
         } 
         else if (clickCounter === 2 && isCardMatch() === "false") {
           console.log("NOT MATCH")
-          setTimeout(cleanUpFalse, 1000);
+          setTimeout(notMatchedEvent, 1000);
         }
-        else if (clickCounter === 2 && isCardMatch() === "clicked same card 2x") {
+        else if (clickCounter === 2 && isCardMatch() === "clicked same card 2x") { //cannot click on 2 same cards
           console.log("cannot click 2 same card");
-          clickCounter = 1; //revert to the previous click
+          clickCounter = 1; //ignore the last click
         }
-    }
-    
   }
 }
 
 ////////////////////////////////////////////////////////////////////
-function isCardMatch(){
+function isCardMatch() {
   const arr = [];
 
   for (let i=0; i <= gameContainer.children.length-1; i++){
@@ -103,9 +96,7 @@ function isCardMatch(){
       arr.push(gameContainer.children[i].getAttribute("class"));
     }
   } 
-
-  console.log("arr",arr);
-
+  console.log("arr",arr)
   if (arr.length === 1){
     return "clicked same card 2x";
   }
@@ -116,8 +107,9 @@ function isCardMatch(){
     return "false";
   }
 }
+
 ////////////////////////////////////////////////////////////////////
-function cleanUpTrue(){
+function matchedEvent(){
   for (let i=0; i <= gameContainer.children.length-1; i++){
       if (gameContainer.children[i].dataset.open === "true") {
         gameContainer.children[i].dataset.matched = "true";
@@ -126,8 +118,9 @@ function cleanUpTrue(){
   } 
   clickCounter = 0;
 }
+
 ////////////////////////////////////////////////////////////////////
-function cleanUpFalse(){
+function notMatchedEvent(){
   for (let i=0; i <= gameContainer.children.length-1; i++){
       gameContainer.children[i].dataset.open = '';
       if (gameContainer.children[i].dataset.matched !== "true"){
@@ -136,17 +129,18 @@ function cleanUpFalse(){
   } 
   clickCounter = 0;
 }
+
+
 ////////////////////////////////////////////////////////////////////
+// function cardReset () {
+//   for (let i=0; i <= gameContainer.children.length-1; i++) {
+//     if (gameContainer.children[i].dataset.matched !== "true"){
+//       gameContainer.children[i].style.backgroundColor = '';
+//     }
+//   }
 
-function cardReset () {
-  for (let i=0; i <= gameContainer.children.length-1; i++) {
-    if (gameContainer.children[i].dataset.matched !== "true"){
-      gameContainer.children[i].style.backgroundColor = '';
-    }
-  }
-
-}
+// }
 
 
 // when the DOM loads
-createDivsForColors(COLORS); /////CHANGE LATER to createDivsForColors(shuffledColors);
+createDivsForColors(shuffledColors); /////CHANGE LATER to createDivsForColors(shuffledColors);

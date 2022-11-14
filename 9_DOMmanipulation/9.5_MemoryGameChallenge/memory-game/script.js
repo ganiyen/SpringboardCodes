@@ -1,6 +1,10 @@
 const gameContainer = document.getElementById("game");
+const button = document.querySelector("#button");
+const startGame = document.querySelector("#start-button");
+const score = document.querySelector("#score-number");
+
+
 let clickCounter = 0;
-let matchCardIndex = [];
 
 const COLORS = [
   "red",
@@ -37,8 +41,27 @@ function shuffle(array) {
 
   return array;
 }
-
 let shuffledColors = shuffle(COLORS);
+
+startGame.addEventListener('click',function(){
+  console.log("Start button clicked")
+  
+  createDivsForColors(shuffledColors); //create the cards
+  startGame.remove(); //remove the start button
+
+  //create restart button and add click event listener
+  const restartGame = document.createElement('button');// <button></button>
+  restartGame.setAttribute("id","restart-button") // <button id="restart-button"></button>
+  restartGame.innerHTML = "Restart"; // <button id="restart-button">Restart</button>
+  button.append(restartGame);
+  restartGame.addEventListener('click',function(){
+    console.log("Restart button clicked")
+    gameContainer.innerHTML = '';
+    score.innerHTML = 0;
+    createDivsForColors(shuffle(COLORS)); 
+  });
+  
+});
 
 // this function loops over the array of colors
 // it creates a new div and gives it a class with the value of the color
@@ -66,8 +89,8 @@ function createDivsForColors(colorArray) {
 // TODO: Implement this function!
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
-  
-  if ((event.target.getAttribute("data-matched") !== "true") && (clickCounter <= 1)) {  //ignore clicks on matched cards, cannot click more than 2 cards
+
+  if ((event.target.getAttribute("data-matched") !== "true") && (clickCounter <= 1)) {  //ignore clicks on matched cards, cannot open more than 2 cards
       clickCounter++;
       event.target.setAttribute("data-open","true");
       event.target.style.backgroundColor = event.target.className;
@@ -117,6 +140,21 @@ function matchedEvent(){
       gameContainer.children[i].dataset.open = '';
   } 
   clickCounter = 0;
+  updateScore();
+}
+
+////////////////////////////////////////////////////////////////////
+function updateScore(){
+  let countMatched = 0;
+  let newScore = 0;
+
+  for (let i=0; i <= gameContainer.children.length-1; i++){
+    if (gameContainer.children[i].dataset.matched === "true") {
+      countMatched++;
+    }
+  }
+  newScore = countMatched*10;
+  score.innerHTML = newScore;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -129,18 +167,3 @@ function notMatchedEvent(){
   } 
   clickCounter = 0;
 }
-
-
-////////////////////////////////////////////////////////////////////
-// function cardReset () {
-//   for (let i=0; i <= gameContainer.children.length-1; i++) {
-//     if (gameContainer.children[i].dataset.matched !== "true"){
-//       gameContainer.children[i].style.backgroundColor = '';
-//     }
-//   }
-
-// }
-
-
-// when the DOM loads
-createDivsForColors(shuffledColors); /////CHANGE LATER to createDivsForColors(shuffledColors);

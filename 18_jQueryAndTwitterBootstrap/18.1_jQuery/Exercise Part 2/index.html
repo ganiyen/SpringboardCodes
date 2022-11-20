@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Exercise Part 2</title>
+</head>
+<body>
+    <h1>Movies App!</h1>
+
+    <form>
+        <input type="text" placeholder="Title" id="title">
+        <input type="text" placeholder="Rating" id="rating">
+        <!-- <input type="submit" id="submit-btn"> -->
+        <button>Submit</button> 
+    </form>
+
+    <div>
+        <ul class="movie-list">
+
+        </ul>
+    </div>
+
+
+    <!-- Movies App!
+    Build an application that uses jQuery to do the following:
+    
+    Contains a form with two inputs for a title and rating along with a button to submit the form.
+    When the form is submitted, capture the values for each of the inputs and append them to the DOM along with a button to remove each title and rating from the DOM.
+    When the button to remove is clicked, remove each title and rating from the DOM. -->
+    
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <script>
+          $("button").on("click", function(e){
+            e.preventDefault();
+            let title  = $("input").eq(0).val();
+            let rating = $("input").eq(1).val();
+            if (rating >= 0 && rating <= 10){
+                $(".movie-list").append(`<li>${title}, ${rating} <button class="remove-button">Remove</button></li>`);
+            } else {
+                alert("Rating must be between 0 and 10");
+            }
+            $("input").eq(0).val('');
+            $("input").eq(1).val('');
+          });
+
+          //add event listener for the remove button
+          $(".movie-list").on("click", ".remove-button", function(){
+            $(this).parent().remove();
+          })
+    </script>
+</body>
+</html>

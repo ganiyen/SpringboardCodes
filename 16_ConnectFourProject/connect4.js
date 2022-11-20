@@ -188,8 +188,6 @@ function isBoardFull() {
                   }
                 });
 
-  console.log("temp",temp);
-  console.log("result",result)
   return result;
 }
 

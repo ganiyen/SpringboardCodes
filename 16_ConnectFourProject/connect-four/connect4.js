@@ -17,14 +17,14 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  let temp = [];
+  for (let i=0; i <= HEIGHT-1; i++) {
+    let temp = [];
     for (let i=0; i <= WIDTH-1; i++) {
       temp.push(null);
     }
-    for (let i=0; i <= HEIGHT-1; i++) {
-      board.push(temp);
-    }  
-  return board;
+    board.push(temp);
+  }  
+  //return board;
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -61,7 +61,7 @@ function makeHtmlBoard() {
     const row = document.createElement("tr"); //<tr></tr>
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td"); //<td></td>
-      cell.setAttribute("id", `${y}-${x}`);      //<td id="0-0"></td>
+      cell.setAttribute("id", `${HEIGHT-1-y}-${x}`);      //<td id="0-0"></td>
       row.append(cell);
     }   
     //  <tr> --> row
@@ -92,7 +92,16 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  const columnArr = [];
+  for (let i=0; i <= HEIGHT-1; i++){
+    columnArr.push(board[i][x]);
+  }
+  for (let i=0; i <= columnArr.length-1; i++){
+    if (columnArr[i] === null){
+      return i;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -121,6 +130,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -138,6 +148,7 @@ function handleClick(evt) {
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
   placeInTable(y, x);
+  board[y][x] = currPlayer;
 
   // check for win
   if (checkForWin()) {
@@ -146,10 +157,43 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  if (isBoardFull()) {
+    endGame("Board is filled, no winner");
+  };
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
 }
+
+function isBoardFull() {
+  let temp = [];
+
+  //check by row first
+  for (i=0; i <= HEIGHT-1; i++){
+    temp[i] = board[i].every(val => {
+                if (val !== null) {
+                  return true;
+                } else {
+                  return false;
+                }
+              });
+  }
+
+  let result = temp.every(val => {
+                  if (val === true) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                });
+
+  console.log("temp",temp);
+  console.log("result",result)
+  return result;
+}
+
+
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
@@ -173,12 +217,12 @@ function checkForWin() {
 
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]]; // check for horizontal match
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];  // check for vertical match
+      let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]]; // check for right diagonal match
+      let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]]; // check for left diagonal match
 
-      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) { // if either horizontal, vertical, or diagonal matches, then the currPlayer wins
         return true;
       }
     }

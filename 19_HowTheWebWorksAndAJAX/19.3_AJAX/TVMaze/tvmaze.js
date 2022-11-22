@@ -13,6 +13,7 @@ const $searchForm = $("#search-form");
  */
 
 async function getShowsByTerm(term) {
+  // ADD: Remove placeholder & make request to TVMaze search shows API.
   console.log("search term:", term);
   const res = await axios.get("https://api.tvmaze.com/search/shows", {params:{q:term}})
   console.log("response:", res);
@@ -34,8 +35,10 @@ async function getShowsByTerm(term) {
     }
 
     console.log("BEFORE PUSH showArr i=", i, "length=", showArr.length, showArr)
+    //showArr.push(tempObj);
     showArr[i] = tempObj;
     console.log("AFTER PUSH showArr i=", i, "length=", showArr.length, showArr)
+    //debugger;
   }
   return showArr;
 }
@@ -67,7 +70,6 @@ function populateShows(shows) {
   }
 }
 
-//event listener for the Episodes button
 $("#shows-list").on("click", "#episode-button", async function(evt){
   const showId = evt.target.parentElement.parentElement.parentElement.dataset.showId;
   const episodes = await getEpisodesOfShow(showId);
@@ -86,6 +88,9 @@ async function searchForShowAndDisplay() {
 
   $episodesArea.hide();
   populateShows(shows);
+
+  //const episodes = await getEpisodesOfShow(shows[0].id);
+  //populateEpisodes(episodes);
 }
 
 $searchForm.on("submit", async function (evt) {
@@ -116,7 +121,8 @@ async function getEpisodesOfShow(id) {
   return episodeArr;
 }
 
-//render the list of episodes HTML under the Episodes button
+/** Write a clear docstring for this function... */
+
 function populateEpisodes(episodes, evt) {
   const $whereToPutEpisodes = $(evt.target.nextElementSibling);
   $whereToPutEpisodes.empty();

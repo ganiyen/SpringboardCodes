@@ -1,9 +1,9 @@
 console.log("Let's get this party started!");
 
-//const searchTerm = document.querySelector(".search-term").value
 const form = document.querySelector("#form")
 const gifRender = document.querySelector("#gif-list")
 
+//Search button action
 form.addEventListener("submit", function(e) {
     e.preventDefault();
     const searchTerm = document.querySelector("#search-term")
@@ -11,6 +11,7 @@ form.addEventListener("submit", function(e) {
     searchTerm.value = '';
 });
 
+//get a gif from Giphy API based on the user input
 async function getGif(searchTerm) {
     console.log("search term", searchTerm)
     const config = {
@@ -29,6 +30,7 @@ async function getGif(searchTerm) {
     gifRender.append(newGif);
 }
 
+//Remove button action
 const removeButton = document.querySelector("#remove-button")
 
 removeButton.addEventListener("click",function(){

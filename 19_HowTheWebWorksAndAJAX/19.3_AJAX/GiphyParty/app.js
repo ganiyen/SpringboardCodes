@@ -21,7 +21,7 @@ async function getGif(searchTerm) {
 
     const res = await axios.get("http://api.giphy.com/v1/gifs/search", {params:config})
     console.log("showing res",res);
-    console.log("top result", res.data.data[0].embed_url)
+    console.log("top result gif", res.data.data[0].embed_url)
     searchResult = res.data.data[0].embed_url
 
     const newGif = document.createElement("iframe") //<iframe>

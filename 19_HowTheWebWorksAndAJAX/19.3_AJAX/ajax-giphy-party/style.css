@@ -1,0 +1,45 @@
+.display-gif {
+    height: 300px;
+    width: 480px;
+    border: none;
+  }
+
+  #search-button {
+    background-color: lightskyblue;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #remove-button {
+    background-color: orangered;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+input {
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  body {
+    background-color: black;
+  }
+
+  h1 {
+    color: white;
+    text-align: center;
+  }
+
+  form {
+    display:inline;
+  }
+
+  .user-interface {
+    text-align:center;
+  }

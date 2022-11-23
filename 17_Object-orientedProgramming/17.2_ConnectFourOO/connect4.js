@@ -145,7 +145,7 @@ class Game {
   }
 }
 
-//Identify the player by its color
+//identify the player by its color
 class Player {
   constructor(color){
     this.color=color;

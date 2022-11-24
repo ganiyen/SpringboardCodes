@@ -9,14 +9,28 @@
 body {
     font-family: 'Copse', serif;
     text-align:center;
+    background-color: skyblue;
   }
 
 header {
     text-align:center;
 }
 
+button {
+    background-color:#8d2ab5;  
+    color: white;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:20px;
+    padding-right:20px;
+    border-radius: 5px;
+    font-size:16px;
+}
+
 #spin-container {
     display:none;
+    color: #74119c;
+    font-size:64px;
 }
 
 table {
@@ -27,7 +41,7 @@ thead tr td {
     width: 175px;
     height:100px;
     text-align:center;
-    background-color:#115ff4;
+    background-color: #115ff4;
     font-weight:bold;
     font-size:16px;
     text-transform:uppercase;
@@ -43,7 +57,7 @@ tbody tr td {
     width: 175px;
     height:100px;
     text-align:center;
-    background-color:#115ff4;
+    background-color: #115ff4;
     font-size:14px;
     color:white;
     border-radius: 5px;

@@ -5,3 +5,46 @@
   #8d2ab5
   #74119c
 */
+body {
+    font-family: 'Copse', serif;
+    text-align:center;
+  }
+
+header {
+    /* margin:auto; */
+    text-align:center;
+}
+
+#spin-container {
+    display:none;
+}
+
+table {
+    margin:auto;
+}
+
+thead tr td {
+    width: 175px;
+    height:100px;
+    text-align:center;
+    background-color:#115ff4;
+    font-weight:bold;
+    font-size:16px;
+    text-transform:uppercase;
+    color: white;
+    border-radius: 5px;
+}
+
+thead tr td::first-letter {
+    text-transform:uppercase;
+}
+
+tbody tr td {
+    width: 175px;
+    height:100px;
+    text-align:center;
+    background-color:#115ff4;
+    font-size:14px;
+    color:white;
+    border-radius: 5px;
+}

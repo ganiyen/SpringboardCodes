@@ -29,17 +29,15 @@ const NUMofCATEGORIES = 6;
  */
 
 async function getCategoryIds() {
-    const res = await axios.get("https://jservice.io/api/categories", {params:{count:100}})
-    console.log("res",res);
+    const res = await axios.get("https://jservice.io/api/categories", {params:{count:100}}) //get 100 categories
     const categoryArr = [];
  
     while(categoryArr.length < NUMofCATEGORIES) {
-        const randomIndex = Math.floor(Math.random()*100);
+        const randomIndex = Math.floor(Math.random()*100); //get a random number from 0 to 99. find category index randomly
         if (res.data[randomIndex].clues_count >= NUMofQUESTIONS) { //only save the category that has at least NUMofQUESTIONS questions
             categoryArr.push(res.data[randomIndex].id)
         }
     }
-    console.log("categoryArr", categoryArr);
     return categoryArr;
 }
 
@@ -57,7 +55,6 @@ async function getCategoryIds() {
 
 async function getCategory(catId) {
         const res = await axios.get("http://jservice.io/api/category", {params:{id:catId}})
-        console.log("res", res);
 
         const cluesArr = [];
         for (let i=0; i <= NUMofQUESTIONS-1; i++){
@@ -68,14 +65,12 @@ async function getCategory(catId) {
                 }
             cluesArr.push(cluesObj);
         }
-        console.log("cluesArr", cluesArr);
 
         const catObj = {
             title:res.data.title,
             clues:cluesArr
         }
-        console.log("catObj", catObj);
-        //debugger;
+
         return catObj;
 }
 
@@ -88,12 +83,12 @@ async function getCategory(catId) {
  */
 
 function fillTable() {
-    const tableHeadRow = document.createElement("tr");      //<tr></tr>
+    const tableHeadRow = document.createElement("tr");       //<tr></tr>
 
     for (let category of categories) {
         const tableHeadData = document.createElement("td");  //<td></td>
-        tableHeadData.innerHTML = category.title       //<td>title</td>
-        tableHeadRow.append(tableHeadData);                 //<tr><td>title</td></tr>
+        tableHeadData.innerHTML = category.title             //<td>title</td>
+        tableHeadRow.append(tableHeadData);                  //<tr><td>title</td></tr>
     }
 
     const tableHead = document.querySelector("thead") //<thead></thead>
@@ -115,8 +110,8 @@ function fillTable() {
         for (let j=0; j <= NUMofCATEGORIES-1; j++) {
             const tableBodyData = document.createElement("td");  //<td></td>
             tableBodyData.innerHTML = '?'                        //<td>?</td>
-            tableBodyRow.append(tableBodyData);                 //<tr><td>?</td></tr>
-            tableBodyData.classList.add(`${j}-${i}`);  //<tr><td class=cat-clue>?</td></tr>
+            tableBodyRow.append(tableBodyData);                  //<tr><td>?</td></tr>
+            tableBodyData.classList.add(`${j}-${i}`);            //<tr><td class=cat-clue>?</td></tr>
         }
 
         const tableBody = document.querySelector("tbody")
@@ -143,7 +138,6 @@ function fillTable() {
  * */
 
 function handleClick(evt) {
-    console.log("click");
     //extract the category and question from the clicked cell's class
     //format: category-question
     clickCategoryIdx = evt.target.classList.value[0];
@@ -158,7 +152,6 @@ function handleClick(evt) {
         console.log("question", question)
         evt.target.innerHTML = question;
         categories[clickCategoryIdx].clues[clickQuestionIdx].showing = true;
-       // debugger;
     } 
     else if (isQshown === true) {
         //if the question has been shown, then show the answer
@@ -167,7 +160,6 @@ function handleClick(evt) {
         evt.target.innerHTML = answer;
         evt.target.style.backgroundColor = "#28a200";
     }
-
 }
 
 /** Wipe the current Jeopardy board, show the loading spinner,
@@ -201,6 +193,7 @@ async function setupAndStart() {
     fillTable();
 }
 
+//when the game play button is clicked, start the game, get the categories and the clues, update the loading spinning icon, update the working on the game play button
 $("button").on("click", async function(){
     document.querySelector("thead").innerHTML = '';
     document.querySelector("tbody").innerHTML = '';
@@ -211,32 +204,7 @@ $("button").on("click", async function(){
     hideLoadingView();     //hide the spinning loading icon after the table finishes loading, update the button wording
 })
 
+//event handler when the clues are clicked
 $('table').on("click", function(evt) {
     handleClick(evt);
 })  
-
-/** On click of start / restart button, set up game. */
-
-// TODO
-
-/** On page load, add event handler for clicking clues */
-
-// TODO
-
-
-
-// The game board should be 6 categories across, 5 question down, displayed in a table. Above this should be a header row with the name of each category.
-
-// At the start of the game, you should randomly pick 6 categories from the jService API. For each category, you should randomly select 5 questions for that category.
-
-// Initially, the board should show with ? on each spot on the board (on the real TV show, it shows dollar amount, but we won’t implement this).
-
-// When the user clicks on a clue ?, it should replace that with the question text.
-
-// When the user clicks on a visible question on the board, it should change to the answer (if they click on a visible answer, nothing should happen)
-
-
-
-
-//randomize
-// When the user clicks the “Restart” button at the bottom of the page, it should load new categories and questions.

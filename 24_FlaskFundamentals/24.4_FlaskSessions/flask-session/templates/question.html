@@ -1,0 +1,57 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+</head>
+<body>
+    {% for msg in get_flashed_messages() %}
+        <p>{{msg}}</p>
+    {% endfor %}
+    <div>{{question}}</div>
+    <form action="/answer" method="POST">
+        <input type="radio" name="answer" value="{{choice0}}">{{choice0}}</button>
+        <input type="radio" name="answer" value="{{choice1}}">{{choice1}}</button>
+        <div>
+            <button>Continue</button>
+        </div>
+    </form>
+    <div>
+        {{responses}}
+        {% for response in responses %}
+            <p>{{response}}</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html> -->
+
+{% extends 'base.html'  %}
+
+{% block title %}
+    Questions
+{% endblock %}
+
+{% block content %}
+    {% for msg in get_flashed_messages() %}
+        <p>{{msg}}</p>
+    {% endfor %}
+
+    <div>{{question}}</div>
+    <form action="/answer" method="POST">
+        <input type="radio" name="answer" value="{{choice0}}">{{choice0}}</button>
+        <input type="radio" name="answer" value="{{choice1}}">{{choice1}}</button>
+        <div>
+            <button>Continue</button>
+        </div>
+    </form>
+    
+    <!-- <div>
+    {{responses}}
+    {% for response in responses %}
+        <p>{{response}}</p>
+    {% endfor %}
+    </div> -->
+{% endblock %}

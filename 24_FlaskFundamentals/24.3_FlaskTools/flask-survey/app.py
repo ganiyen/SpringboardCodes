@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import satisfaction_survey
+from flask import session
+
 
 app = Flask(__name__)
 
